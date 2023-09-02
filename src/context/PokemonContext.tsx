@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { AllPokemonsResult, PokeType } from "../interfaces/types";
+import { AllPokemonsResult, PokeType, PokemonsByTypeResult } from "../interfaces/types";
 import axios from "axios";
 
 interface ContextProps {
@@ -31,7 +31,11 @@ const PokemonProvider = ({ children }: any) => {
     const {data} = await axios.get(type?.url!);
     let pokemons = data?.pokemon?.map(
         ({pokemon}: PokemonsByTypeResult) => pokemon?.url
-    )
+    );
+
+    type.name !== "All"
+      ? setPokemonsFiltered(pokemons)
+      : setPokemonsFiltered(allPokemons)
   };
 
 
